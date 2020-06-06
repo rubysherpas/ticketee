@@ -1,0 +1,29 @@
+@import "bootstrap";
+
+.state_change {
+  @extend .my-2;
+}
+
+.comment {
+  @extend .border, .rounded;
+  border-width: 2px;
+
+  .author {
+    @extend .text-secondary, .font-italic, .p-2;
+
+    background: lighten($blue, 45);
+    border-bottom: 1px solid lighten($blue, 35);
+  }
+
+  .text {
+    @extend .p-2;
+  }
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  + .comment {
+    @extend .mt-4;
+  }
+}

@@ -1,0 +1,69 @@
+// Place all the styles related to the tickets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "bootstrap";
+@import "font-awesome";
+
+.state {
+  display: inline-block;
+  font-size: 110%;
+  color: white;
+  @extend .rounded, .px-2, .py-1;
+}
+
+.tickets li {
+  @extend .mb-1;
+}
+
+.ticket {
+  .attributes {
+    dt {
+      @extend .mr-2;
+    }
+
+    @extend .col-md-4, .col-sm-12;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+.tag {
+  @extend .state, .mr-1, .mb-1, .border;
+  color: black;
+
+  a {
+    color: black;
+    &.remove {
+      font-family: "FontAwesome";
+      @extend .fa-close;
+      text-decoration: none;
+    }
+  }
+}
+
+.watch, .unwatch {
+  @extend .btn;
+  font-weight: bold;
+
+  &:before {
+    font-family: "FontAwesome";
+    padding-right: 0.5em;
+  }
+}
+
+.watch {
+  @extend .btn-success;
+
+  &:before {
+    @extend .fa-eye;
+  }
+}
+
+.unwatch {
+  @extend .btn-danger;
+
+  &:before {
+    @extend .fa-eye-slash;
+  }
+}

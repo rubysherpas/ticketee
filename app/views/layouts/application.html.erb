@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <% if content_for?(:title) %>
+        <%= yield(:title) %>
+      <% else %>
+        Ticketee
+      <% end %>
+    </title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      <% State.all.each do |state| %>
+        .state-<%= state.name.parameterize %> {
+          background-color: <%= state.color %>;
+        }
+      <% end %>
+    </style>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <%= link_to "Ticketee", root_path, class: "navbar-brand" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item <%= "active" if current_page?("/") %>">
+            <%= link_to "Home", root_path, class: "nav-link" %>
+          </li>
+          <% unless user_signed_in? %>
+            <li class="<%= "active" if current_page?("/users/sign_up") %>">
+              <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+            </li>
+            <li class="<%= "active" if current_page?("/users/sign_in") %>">
+              <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <% if user_signed_in? %>
+        <div class="navbar-right">
+          <p class="navbar-text">
+            Signed in as <%= current_user.email %>
+          </p>
+          &middot; <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+        </div>
+      <% end %>
+    </nav>
+
+    <div class="container-fluid">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key %>">
+          <%= message %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

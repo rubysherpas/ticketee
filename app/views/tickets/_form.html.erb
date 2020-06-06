@@ -1,0 +1,17 @@
+<%= bootstrap_form_with(model: [project, ticket], local: true, label_errors: true) do |form| %>
+  <%= form.text_field :name %>
+  <%= form.text_area :description %>
+
+  <div class='form-group tags'>
+    <div><%= label_tag :tag_names, "Tags" %></div>
+    <%= render @ticket.tags, ticket: @ticket %>
+    <%= text_field_tag :tag_names, "", class: "form-control" %>
+  </div>
+
+  <div class="dropzone uploader" data-url="<%= polymorphic_url([:upload_file, project, :tickets]) %>"></div>
+  <% @attachments.each.with_index do |attachment, i| %>
+    <%= hidden_field_tag "attachment[#{i}][details]", attachment.to_json, class: "saved-attachment" %>
+  <% end %>
+
+  <%= form.primary %>
+<% end %>
