@@ -22,7 +22,7 @@ jobs:
 
     - uses: actions/cache@v2
       with:
-        path: ticketee/vendor/bundle
+        path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
@@ -42,18 +42,14 @@ jobs:
         ruby-version: 2.7.1
     - name: Install RubyGems
       run: |
-        cd ticketee
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3 --path vendor/bundle
     - name: Install Node packages
       run: |
-        cd ticketee
         yarn install
     - name: Compile assets
       run: |
-        cd ticketee
         bundle exec rake assets:precompile
     - name: Run tests
       run: |
-        cd ticketee
         bundle exec rspec
