@@ -4,12 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ticketee
-
     steps:
     - uses: actions/checkout@v2
     - name: Get yarn cache directory path
