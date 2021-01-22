@@ -23,7 +23,7 @@ jobs:
     - uses: actions/cache@v2
       name: Load Ruby Cache
       with:
-        path: ticketee/vendor/bundle
+        path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
