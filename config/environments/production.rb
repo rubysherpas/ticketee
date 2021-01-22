@@ -117,4 +117,21 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  ActionMailer::Base.delivery_method = :smtp
+
+  host = "stormy-journey-97010.herokuapp.com"
+
+  ActionMailer::Base.smtp_settings = {
+    port:           ENV['MAILGUN_SMTP_PORT'],
+    address:        ENV['MAILGUN_SMTP_SERVER'],
+    user_name:      ENV['MAILGUN_SMTP_LOGIN'],
+    password:       ENV['MAILGUN_SMTP_PASSWORD'],
+    domain:         host,
+    authentication: :plain,
+  }
+
+  config.action_mailer.default_url_options = {
+    host: host
+  }
 end
