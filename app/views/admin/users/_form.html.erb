@@ -1,0 +1,7 @@
+<%= bootstrap_form_with(model: [:admin, user], local: true, label_errors: true) do |form| %>
+  <%= form.text_field :email %>
+  <%= form.text_field :password %>
+  <%= form.check_box :admin, label: "Is an admin?" %>
+
+  <%= form.primary %>
+<% end %>

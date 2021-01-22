@@ -1,0 +1,23 @@
+<% ticket_url = project_ticket_url(@project, @ticket) %>
+<tr>
+  <td>
+    <h1>New comment</h1>
+
+    <%= @ticket.name %> for <%= @project.name %> has been updated.
+
+    <p>
+      <%= link_to "#{@project.name} - #{@ticket.name}", ticket_url %>
+    </p>
+
+    <p><%= @comment.author.email %> wrote:</p>
+
+    <%= simple_format @comment.text %>
+  </td>
+</tr>
+<tr><td class="divider"></td></tr>
+<tr>
+  <td class="footer">
+    You can view this ticket here:
+    <%= link_to ticket_url, ticket_url %>
+  </td>
+</tr>

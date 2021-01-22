@@ -1,0 +1,85 @@
+<div class="ticket">
+  <header>
+    <h1><%= @project.name %></h1>
+  </header>
+
+  <header>
+    <h2><%= @ticket.name %></h2>
+
+    <ul class="actions">
+      <li><%= link_to "Edit Ticket", [:edit, @project, @ticket] %></li>
+      <li><%= link_to "Delete Ticket", [@project, @ticket], method: :delete,
+  data: { confirm: "Are you sure you want to delete this ticket?"} %></li>
+    </ul>
+  </header>
+
+  <table class="attributes">
+    <tr>
+      <th>Author:</th>
+      <td><%= @ticket.author.email %></td>
+    </tr>
+    <tr>
+      <th>Created:</th>
+      <td><%= time_ago_in_words(@ticket.created_at) %> ago</td>
+    </tr>
+    <% if @ticket.state.present? %>
+      <tr>
+        <th>State:</th>
+        <td><%= render @ticket.state %></td>
+      </tr>
+    <% end %>
+
+    <% if @ticket.tags.any? %>
+      <tr>
+        <th>Tags:</th>
+        <td class="tags"><%= render @ticket.tags, ticket: @ticket %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <th>Watchers:</th>
+      <td class="watchers">
+        <%= toggle_watching_button(@ticket) %>
+        <%= @ticket.watchers.map(&:email).to_sentence %>
+      </td>
+    </tr>
+  </table>
+
+  <%= simple_format(@ticket.description) %>
+
+  <div class="comments">
+    <header>
+      <h3>Comments</h3>
+    </header>
+
+    <% comments = @ticket.comments.persisted.ordered %>
+    <% if comments.any? %>
+      <% state = nil %>
+      <% comments.each do |comment| %>
+        <%= render comment %>
+        <% if comment.state != state %>
+          <%= render "state_change", previous_state: state, new_state: comment.state %>
+          <% state = comment.state %>
+        <% end %>
+      <% end %>
+
+    <% else %>
+      <p>There are no comments for this ticket.</p>
+    <% end %>
+
+    <%= render "comments/form", ticket: @ticket, comment: @comment %>
+  </div>
+
+  <% if @ticket.attachments.present? %>
+    <h4>Attachment(s)</h4>
+    <div class="attachments">
+      <% @ticket.attachments.each do |attachment| %>
+        <p>
+          <%= link_to attachment.filename,
+            rails_blob_path(attachment, disposition: 'attachment') %>
+          (<%= number_to_human_size(attachment.blob.byte_size) %>)
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

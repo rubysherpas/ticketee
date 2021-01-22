@@ -1,0 +1,6 @@
+<%= bootstrap_form_with model: [:admin, state], local: true do |f| %>
+  <%= f.text_field :name %>
+  <%= f.color_field :color %>
+
+ <%= f.submit class: 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,50 @@
+<% title @project.name, "Projects" %>
+
+<header>
+  <h1><%= @project.name %></h1>
+
+  <% admins_only do %>
+    <ul class="actions">
+      <li><%= link_to "Edit Project", edit_admin_project_path(@project),
+        class: "edit" %></li>
+
+      <li><%= link_to "Delete Project", admin_project_path(@project),
+        method: :delete,
+        data: { confirm: "Are you sure you want to delete this project?" },
+        class: "delete" %></li>
+    </ul>
+  <% end %>
+</header>
+
+<p><%= @project.description %></p>
+
+<header>
+  <h2>Tickets</h2>
+
+  <ul class="actions">
+    <li>
+      <%= link_to fa_icon("plus") + " New Ticket",
+        new_project_ticket_path(@project),
+        class: "btn btn-success" %>
+    </li>
+
+    <li>
+      <%= form_tag search_project_tickets_path(@project), method: :get,
+        class: "form-inline" do %>
+        <%= label_tag "search", "Search", class: "sr-only" %>
+        <%= text_field_tag "search", params[:search], class: "form-control" %>
+        <%= submit_tag "Search", class: "btn btn-outline-secondary ml-2" %>
+      <% end %>
+    </li>
+  </ul>
+</header>
+
+<ul class="tickets">
+  <% @tickets.each do |ticket| %>
+    <li>
+      #<%= ticket.id %> -
+      <%= link_to ticket.name, [@project, ticket] %>
+      <%= render ticket.state if ticket.state %>
+    </li>
+  <% end %>
+</ul>

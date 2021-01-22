@@ -1,0 +1,8 @@
+<div class="state_change">
+  <% if previous_state %>
+    <strong><i class="fa fa-gear"></i> state changed</strong> from
+    <%= render previous_state %> to <%= render new_state %>
+  <% else %>
+    <strong><i class="fa fa-gear"></i> state set</strong> to <%= render new_state %>
+  <% end %>
+</div>

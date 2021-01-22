@@ -1,0 +1,14 @@
+<%= bootstrap_form_with(model: [project, ticket], local: true, label_errors: true) do |form| %>
+  <%= form.text_field :name %>
+  <%= form.text_area :description %>
+  <% upload_url = upload_file_project_tickets_path(project) %>
+  <div class="dropzone uploader mb-2" data-url="<%= upload_url %>"></div>
+
+  <div class='form-group tags'>
+    <div><%= label_tag :tag_names, "Tags" %></div>
+    <%= render @ticket.tags, ticket: @ticket %>
+    <%= text_field_tag :tag_names, "", class: "form-control" %>
+  </div>
+
+  <%= form.primary %>
+<% end %>
